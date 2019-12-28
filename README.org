@@ -60,7 +60,7 @@ rm -r ~/.emacs.d
 git clone https://github.com/hlissner/doom-emacs -b develop ~/.emacs.d
 
 # Clone my config
-git clone https://github.com/ztlevi/doom-config ~/.doom.d
+git clone https://github.com/50ways2sayhard/doom-config ~/.doom.d
 
 cd ~/.emacs.d
 make quickstart

@@ -1,22 +1,5 @@
 ;;; ~/.doom.d/+prog.el -*- lexical-binding: t; -*-
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; BETTER EDIT EXP
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; smart kill parens
-(use-package! elec-pair
-  :ensure nil
-  :hook (after-init . electric-pair-mode)
-  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
-
-;; Hungry Delete
-(use-package hungry-delete
-  :diminish
-  :hook (after-init . global-hungry-delete-mode)
-  :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; COMPANY
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -45,30 +28,48 @@
 
 (after! company
   (setq company-idle-delay 0
+        company-tooltip-align-annotations t
+        company-tooltip-limit 12
         company-minimum-prefix-length 1
         company-show-numbers t
-        company-tooltip-minimum-width 12
-        company-tooltip-minimum 5
+        company-echo-delay (if (display-graphic-p) nil 0)
+        company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil
-        company-backends '(company-capf company-files)
+        company-backends '(company-capf)
         company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)
-        company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
-                            company-preview-frontend
+        company-frontends '(company-pseudo-tooltip-frontend
+                            ;; company-preview-frontend
                             company-echo-metadata-frontend
                             ))
-  (add-to-list 'company-transformers 'company//sort-by-tabnine t)
+  ;; (add-to-list 'company-transformers 'company//sort-by-tabnine t)
   )
 
 (def-package! company-prescient
   :after company
   :hook (company-mode . company-prescient-mode))
 
+(after! company-lsp
+  (setq +lsp-company-backend '(company-lsp :with company-tabnine :separate))
+  )
+
 (use-package! company-tabnine
-  :after company
+  :defer 1
+  :custom
+  (company-tabnine-max-num-results 9)
+  :hook
+  (lsp-after-open . (lambda ()
+                      (setq company-tabnine-max-num-results 3)
+                      (add-to-list 'company-transformers 'company//sort-by-tabnine t)
+                      ;; (add-to-list 'company-backends '(company-lsp :with company-tabnine :separate))
+                      (setq company-backends '((company-lsp :with company-tabnine :separate) company-files company-dabbrev))
+                      ))
+  (kill-emacs . company-tabnine-kill-process)
   :config
-  (setq company-tabnine-max-num-results 5)
-  (cl-pushnew 'company-tabnine (default-value 'company-backends)))
+  ;; Enable TabNine on default
+  (set-company-backend! 'prog-mode 'company-tabnine 'company-capf 'company-yasnippet)
+  )
+
 
 (def-package! counsel-tramp
   :commands (counsel-tramp))
@@ -140,8 +141,13 @@
 ;; PYTHON
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq lsp-python-ms-nupkg-channel "beta")
-(setq lsp-python-ms-dir "~/.local/mspyls/")
+(use-package lsp-python-ms
+  :hook (python-mode . (lambda () (require 'lsp-python-ms)))
+  :after lsp-mode python
+  :custom
+  (lsp-python-ms-dir "~/.local/mspyls/")
+  (lsp-python-executable-cmd "python3")
+  )
 ;; (define-derived-mode asl-mode
 ;;   python-mode "ARGO Schema Language Mode"
 ;;   "Major mode for asl file."
@@ -231,8 +237,9 @@
   :defer t
   :init
   (add-hook! (js2-mode rjsx-mode) (run-import-js))
-  (add-hook! (js2-mode rjsx-mode)
-    (add-hook 'after-save-hook #'import-js-fix nil t)))
+  ;; (add-hook! (js2-mode rjsx-mode)
+  ;;   (add-hook 'after-save-hook #'import-js-fix nil t)))
+  )
 (advice-add '+javascript|cleanup-tide-processes :after 'kill-import-js)
 (after! js2-mode (setq js2-basic-offset 2))
 (after! css-mode (setq css-indent-offset 2))
@@ -241,6 +248,7 @@
 (after! web-mode
   (web-mode-toggle-current-element-highlight)
   (web-mode-dom-errors-show))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -286,14 +294,16 @@
 (after! lsp-ui
   (setq lsp-ui-sideline-enable t
         lsp-ui-doc-enable t
-        lsp-ui-doc-use-childframe t
+        ;; lsp-ui-doc-use-childframe t
         lsp-ui-doc-include-signature t
         lsp-ui-doc-max-height 30
         lsp-ui-doc-max-width 100
-        lsp-ui-doc-position 'top
-        lsp-ui-sideline-enable t
+        lsp-ui-sideline-enable nil
         lsp-ui-peek-enable t
-        ))
+        lsp-ui-sideline-ignore-duplicate t
+        lsp-ui-sideline-show-code-actions nil
+        )
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

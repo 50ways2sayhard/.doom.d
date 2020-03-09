@@ -63,8 +63,16 @@
 (package! poetry)
 (package! company-prescient)
 (package! company-tabnine)
-(package! elec-pair)
-(package! hungry-delete)
+(package! lsp-python-ms)
 
 ;; misc
 (package! youdao-dictionary)
+
+
+;; edit
+(package! smooth-scrolling)
+(package! delete-block :recipe (:repo "manateelazycat/delete-block"))
+(package! highlight-indent-guides)
+(package! elec-pair)
+(package! pyim)
+(package! pyim-greatdict :recipe (:repo "tumashu/pyim-greatdict"))

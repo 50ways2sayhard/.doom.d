@@ -253,11 +253,18 @@
      :desc "Import at point" "i" #'importmagic-fix-symbol-at-point
      :desc "Import all"      "a" #'importmagic-fix-imports
      :desc "Sort imports"    "s" #'+python/python-sort-imports)
-   (:prefix ("p", "Poetry")
+   (:prefix ("p" . "Poetry")
      :desc "Poetry Menu" "p" #'poetry
      :desc "Add" "a" #'poetry-add
      :desc "Lock" "l" #'poetry-lock
      :desc "Show" "s" #'poetry-show)
+   (:prefix ("t" . "Test")
+     :desc "Test file" "f" #'python-pytest-file
+     :desc "Test function" "t" #'python-pytest-function
+     :desc "Test last failed" "l" #'python-pytest-last-failed
+     :desc "Popup test panel" "p" #'python-pytest-popup
+     :desc "Test repeat" "r" #'python-pytest-repeat
+     )
    (:prefix ("v" . "ENV")
      "c" #'conda-env-activate
      "C" #'conda-env-deactivate
@@ -375,8 +382,10 @@
    "?" #'Info-search-backward)
  (:after company
    (:map company-active-map
-     "<tab>"   #'company-complete-selection
+     "<tab>"   #'company-complete-common-or-cycle
      ;; Don't interfere with `evil-delete-backward-word' in insert mode
+     "C-n"   #'company-select-next
+     "C-p"   #'company-select-previous
      "C-v"   #'company-next-page
      "A-v"   #'company-previous-page
      "C-j"   #'company-show-location

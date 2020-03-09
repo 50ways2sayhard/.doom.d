@@ -52,3 +52,4 @@
 (load! "+prog")
 (load! "+bindings")
 (load! "+misc")
+(load! "+edit")

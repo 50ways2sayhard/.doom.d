@@ -37,7 +37,6 @@
                doom-unicode-font (font-spec :family "Apple Color Emoji" :size 8)
                doom-modeline-height 32))
         (IS-LINUX
-         (setq resolution-factor (eval (/ (x-display-pixel-height) 1080.0)))
          (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 18 :weight 'regular)
                doom-big-font (font-spec :family "SauceCodePro Nerd Font" :size 22)
                doom-unicode-font (font-spec :family "Noto Color Emoji" :size 8)

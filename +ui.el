@@ -32,13 +32,13 @@
 
 (when (display-graphic-p)
   (cond (IS-MAC
-         (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
-               doom-big-font (font-spec :family "SauceCodePro Nerd Font" :size 22)
+         (setq doom-font (font-spec :family "JetBrains Mono" :size 16)
+               doom-big-font (font-spec :family "JetBrains Mono" :size 22)
                doom-unicode-font (font-spec :family "Apple Color Emoji" :size 8)
                doom-modeline-height 32))
         (IS-LINUX
-         (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 18 :weight 'regular)
-               doom-big-font (font-spec :family "SauceCodePro Nerd Font" :size 22)
+         (setq doom-font (font-spec :family "JetBrains Mono" :size 18 :weight 'regular)
+               doom-big-font (font-spec :family "JetBrains Mono" :size 22)
                doom-unicode-font (font-spec :family "Noto Color Emoji" :size 8)
                doom-modeline-height 32)))
 
@@ -82,16 +82,16 @@
                                      ("Buffer"  15 t)
                                      ("TTY"     12 t)
                                      ("Command"  0 t)]))
-(def-package! all-the-icons-ivy
-  :after ivy
-  :config
-  (dolist (cmd '( counsel-find-file
-                  counsel-file-jump
-                  projectile-find-file
-                  counsel-projectile-find-file
-                  counsel-dired-jump counsel-projectile-find-dir
-                  counsel-projectile-switch-project))
-    (ivy-set-display-transformer cmd #'all-the-icons-ivy-file-transformer)))
+; (def-package! all-the-icons-ivy
+;   :after ivy
+;   :config
+;   (dolist (cmd '( counsel-find-file
+;                   counsel-file-jump
+;                   projectile-find-file
+;                   counsel-projectile-find-file
+;                   counsel-dired-jump counsel-projectile-find-dir
+;                   counsel-projectile-switch-project))
+;     (ivy-set-display-transformer cmd #'all-the-icons-ivy-file-transformer)))
 
 ;; icon
 ;;

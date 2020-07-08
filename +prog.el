@@ -45,13 +45,9 @@
   ;; (add-to-list 'company-transformers 'company//sort-by-tabnine t)
   )
 
-(def-package! company-prescient
-  :after company
-  :hook (company-mode . company-prescient-mode))
-
-(after! company-lsp
-  (setq +lsp-company-backend '(company-lsp :with company-tabnine :separate))
-  )
+; (def-package! company-prescient
+;   :after company
+;   :hook (company-mode . company-prescient-mode))
 
 (use-package! company-tabnine
   :defer 1
@@ -62,7 +58,7 @@
                       (setq company-tabnine-max-num-results 3)
                       (add-to-list 'company-transformers 'company//sort-by-tabnine t)
                       ;; (add-to-list 'company-backends '(company-lsp :with company-tabnine :separate))
-                      (setq company-backends '((company-lsp :with company-tabnine :separate) company-files company-dabbrev))
+                      (setq company-backends '((company-capf :with company-tabnine :separate) company-files company-dabbrev))
                       ))
   (kill-emacs . company-tabnine-kill-process)
   :config
@@ -71,8 +67,8 @@
   )
 
 
-(def-package! counsel-tramp
-  :commands (counsel-tramp))
+; (def-package! counsel-tramp
+;   :commands (counsel-tramp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FLYCHECK
@@ -286,6 +282,19 @@
                  "[/\\\\]third-party$"
                  ))
     (push dir lsp-file-watch-ignored))
+  (setq lsp-pylance-ms-executable "~/pylance.sh")
+
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection (lambda () lsp-pylance-ms-executable)
+                                          (lambda () (f-exists? lsp-pylance-ms-executable)))
+    :major-modes '(python-mode)
+    :server-id 'mspylance
+    :priority -2
+    :initialized-fn (lambda (workspace)
+                      (with-lsp-workspace workspace
+                                          (lsp--set-configuration (lsp-configuration-section "python"))))))
+
   )
 
 

@@ -71,8 +71,8 @@
 
 ;; edit
 (package! smooth-scrolling)
-(package! delete-block :recipe (:repo "manateelazycat/delete-block"))
+; (package! delete-block :recipe (:repo "manateelazycat/delete-block"))
 (package! highlight-indent-guides)
 (package! elec-pair)
 (package! pyim)
-(package! pyim-greatdict :recipe (:repo "tumashu/pyim-greatdict"))
+; (package! pyim-greatdict :recipe (:repo "tumashu/pyim-greatdict"))

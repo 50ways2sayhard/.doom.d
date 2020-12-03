@@ -65,3 +65,8 @@ The original function deletes trailing whitespace of the current line."
 
 (use-package! awesome-pair
   :hook (prog-mode . awesome-pair-mode))
+
+(after! evil
+  (setq evil-split-window-below t
+        evil-vsplit-window-right t)
+  )

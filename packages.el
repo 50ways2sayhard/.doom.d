@@ -48,26 +48,3 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-
-;; ui
-(package! company-box)
-(package! nyan-mode)
-(package! lsp-treemacs)
-(package! all-the-icons-ivy-rich)
-(package! smooth-scrolling)
-
-;; prog
-(package! py-isort)
-(package! poetry)
-(package! company-prescient)
-(package! js-doc)
-(package! sphinx-doc)
-(package! lsp-pyright)
-(package! scss-mode)
-(package! mmm-mode)
-(package! css-in-js :recipe (:repo "orzechowskid/css-in-js.el" :host github :depth 1))
-
-;; edit
-(package! color-rg :recipe (:repo "manateelazycat/color-rg" :host github))
-(package! delete-block :recipe (:repo "manateelazycat/delete-block" :host github))
-(package! awesome-pair :recipe (:repo "manateelazycat/awesome-pair" :host github))

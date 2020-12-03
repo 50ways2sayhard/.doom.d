@@ -1,5 +1,4 @@
-;;; edit.el -*- lexical-binding: t; -*-
-
+;;; private/better-edit/config.el -*- lexical-binding: t; -*-
 
 (setq scroll-step 1)
 (setq scroll-margin 1)

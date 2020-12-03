@@ -1,4 +1,4 @@
-;;; lsp.el -*- lexical-binding: t; -*-
+;;; private/mylsp/config.el -*- lexical-binding: t; -*-
 
 
 (use-package! lsp-treemacs

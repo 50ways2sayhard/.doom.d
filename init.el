@@ -195,4 +195,15 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+
+       :private
+       ui
+       better-edit
+       prog
+       myivy
+       mylsp
+       mymagit
+       myweb
+       mypython
+       )

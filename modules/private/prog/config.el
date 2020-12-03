@@ -1,111 +1,33 @@
-;;; ui.el -*- lexical-binding: t; -*-
+;;; private/prog/config.el -*- lexical-binding: t; -*-
 
-;; line number
-(setq display-line-numbers-type 'relative)
-
-;; trailing whitespace
-(setq show-trailing-whitespace t)
-
-(use-package! doom-themes
-  :custom
-  (doom-themes-enable-italic t)
-  (doom-themes-enable-bold t)
-  (doom-themes-treemacs-theme "doom-colors")
-  :config
-  (load-theme 'doom-one t)
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config)
+;; Flycheck
+(after! flycheck
+  (setq-default flycheck-disabled-checkers
+                '(javascript-jshint python-pylint python-pycompile))
+  (setq-default flycheck-temp-prefix ".flycheck")
   )
 
-(use-package! doom-modeline
-  :custom
-  (inhibit-compacting-font-caches t)
-  (doom-modeline-buffer-file-name-style 'file-name)
-  (doom-modeline-unicode-fallback t)
-  (doom-modeline-icon t)
-  (doom-modeline-major-mode-color-icon t)
-  (doom-modeline-env-version t)
-  (doom-modeline-height 15)
-  (doom-modeline-buffer-modification-icon t)
+
+;; Company
+(after! company
+  (setq company-idle-delay 0
+        company-tooltip-align-annotations t
+        company-tooltip-limit 9
+        company-minimum-prefix-length 1
+        company-show-numbers t
+        company-echo-delay (if (display-graphic-p) nil 0)
+        company-require-match 'never
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil
+        company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)
+        )
   )
 
-(when (display-graphic-p)
-  (cond (IS-MAC
-         (setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 16)
-               doom-big-font (font-spec :family "CaskaydiaCove Nerd Font" :size 22)
-               doom-unicode-font (font-spec :family "Apple Color Emoji" :size 8)
-               doom-modeline-height 32))
-        (IS-LINUX
-         (setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 18 :weight 'regular)
-               doom-big-font (font-spec :family "CaskaydiaCove Nerd Font" :size 22)
-               doom-unicode-font (font-spec :family "Sarasa Nerd" :size 8)
-               doom-modeline-height 32)))
-  ;; fullscreen
-  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+;; (use-package! company-prescient
+;;   :init (company-prescient-mode 1))
 
 
-
-(when IS-MAC
-  ;; enable ligatures support
-  ;; details here: https://github.com/tonsky/FiraCode/wiki/Emacs-instructions
-  (ignore-errors
-    (mac-auto-operator-composition-mode)))
-
-(after! ibuffer
-  ;; set ibuffer name column width
-  (define-ibuffer-column size-h
-    (:name "Size" :inline t)
-    (cond
-     ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-     ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-     (t (format "%8d" (buffer-size)))))
-
-  (setq ibuffer-formats
-        '((mark modified read-only " "
-                (name 50 50 :left :nil) " "
-                (size-h 9 -1 :right) " "
-                (mode 16 16 :left :elide) " "
-                filename-and-process))))
-
-(add-hook! 'process-menu-mode-hook
-  (setq-local tabulated-list-format [("Process" 30 t)
-                                     ("PID"      7 t)
-                                     ("Status"   7 t)
-                                     ("Buffer"  15 t)
-                                     ("TTY"     12 t)
-                                     ("Command"  0 t)]))
-
-
-(when (display-graphic-p)
-  (use-package nyan-mode
-    :custom
-    (nyan-cat-face-number 4)
-    (nyan-animate-nyancat t)
-    :hook
-    (doom-modeline-mode . nyan-mode))
-  )
-
-;; Better experience with icons
-;; Enable it before`ivy-rich-mode' for better performance
-(use-package all-the-icons-ivy-rich
-  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-  :config
-  (setq all-the-icons-ivy-rich-icon-size 0.9)
-  )
-
-;; More friendly display transformer for Ivy
-(use-package ivy-rich
-  :hook (;; Must load after `counsel-projectile'
-         (counsel-projectile-mode . ivy-rich-mode)
-         (ivy-rich-mode . (lambda ()
-                            "Use abbreviate in `ivy-rich-mode'."
-                            (setq ivy-virtual-abbreviate
-                                  (or (and ivy-rich-mode 'abbreviate) 'name)))))
-  :init
-  ;; For better performance
-  (setq ivy-rich-parse-remote-buffer nil))
-
-
+;; Company-Box
 (use-package! company-box
   :diminish
   :defines company-box-icons-all-the-icons
@@ -159,15 +81,3 @@
             (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.02))
             (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15)))
           company-box-icons-alist 'company-box-icons-all-the-icons))
-
-
-(after! ivy
-  (after! ivy-prescient
-    (setq ivy-prescient-retain-classic-highlighting t)
-    (setq ivy-prescient-enable-sorting t)))
-
-
-(after! ivy-posframe
-  ;; Lower internal-border-width on MacOS
-  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-  )

@@ -70,3 +70,5 @@ The original function deletes trailing whitespace of the current line."
   (setq evil-split-window-below t
         evil-vsplit-window-right t)
   )
+
+(remove-hook 'undo-fu-mode-hook #'global-undo-fu-session-mode)

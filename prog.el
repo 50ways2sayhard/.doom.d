@@ -78,6 +78,11 @@
     (add-hook 'before-save-hook #'+python/python-sort-imports nil t))
   )
 
+(after! lsp
+  (add-hook! 'pyvenv-post-activate-hooks #'lsp-restart-workspace)
+  (add-hook! 'pyvenv-post-deactivate-hooks #'lsp-restart-workspace)
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; JS, WEB
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

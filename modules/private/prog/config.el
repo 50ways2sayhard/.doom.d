@@ -32,6 +32,17 @@
   (setq company-box-backends-colors nil
         company-box-doc-delay 0.5)
   :config
+  (delq! 'company-echo-metadata-frontend company-frontends)
+  (add-to-list 'company-box-frame-parameters '(tab-bar-lines 0))
+  (defadvice! +company-box-detect-deleted-frame-a (frame)
+    :filter-return #'company-box--get-frame
+    (if (frame-live-p frame) frame))
+  (defadvice! +company-box-detect-deleted-doc-frame-a (_selection frame)
+    :before #'company-box-doc
+    (and company-box-doc-enable
+         (frame-local-getq company-box-doc-frame frame)
+         (not (frame-live-p (frame-local-getq company-box-doc-frame frame)))
+         (frame-local-setq company-box-doc-frame nil frame)))
   (with-no-warnings
     ;; Prettify icons
     (defun my-company-box-icons--elisp (candidate)

@@ -1,7 +1,5 @@
 ;;; private/prog/config.el -*- lexical-binding: t; -*-
 
-(load! "bindings")
-
 ;; Flycheck
 (after! flycheck
   (setq-default flycheck-disabled-checkers

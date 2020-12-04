@@ -172,3 +172,8 @@
   "M-(" #'awesome-pair-wrap-round
   "M-)" #'awesome-pair-unwrap)
  )
+
+(map!
+ (:after company
+  (:map (company-active-map evil-insert-state-map)
+   "C-o" #'smarter-yas-expand-next-field-complete)))

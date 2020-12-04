@@ -14,11 +14,6 @@
 (setq hscroll-margin 1)
 ;; -SmoothScroll
 
-(use-package! smooth-scrolling
-  :config
-  (smooth-scrolling-mode 1)
-  )
-
 (use-package! color-rg)
 
 

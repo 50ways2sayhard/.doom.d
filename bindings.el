@@ -48,7 +48,7 @@
       (:prefix "h"
        :desc "Helpful command" "C" #'helpful-command)
       (:prefix-map ("j" . "jump")
-       :desc "Jump to character" "j" #'evil-avy-goto-char-timer
+       :desc "Jump to character" "j" #'evil-avy-goto-char
        :desc "Jump to line" "l" #'evil-avy-goto-line
        :desc "Jump to character 2" "J" #'evil-avy-goto-char-2)
       (:prefix-map ("e" . "error")

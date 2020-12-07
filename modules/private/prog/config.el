@@ -1,7 +1,8 @@
 ;;; private/prog/config.el -*- lexical-binding: t; -*-
 
 ;; Flycheck
-(after! flycheck
+(use-package! flycheck
+  :config
   (setq-default flycheck-disabled-checkers
                 '(javascript-jshint python-pylint python-pycompile))
   (setq-default flycheck-temp-prefix ".flycheck")
@@ -9,7 +10,8 @@
 
 
 ;; Company
-(after! company
+(use-package! company
+  :config
   (setq company-idle-delay 0
         company-tooltip-align-annotations t
         company-tooltip-limit 9

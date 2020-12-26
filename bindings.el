@@ -8,6 +8,8 @@
   (define-key input-decode-map "\C-i" [C-i])
   (map! "<C-i>" #'better-jumper-jump-forward))
 
+(evil-ex-define-cmd "W" 'evil-write)
+
 
 (map!
  :gi "C-n" #'next-line

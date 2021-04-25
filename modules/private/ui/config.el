@@ -54,7 +54,7 @@
         (IS-LINUX
          (setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 18 :weight 'regular)
                doom-big-font (font-spec :family "CaskaydiaCove Nerd Font" :size 22)
-               doom-unicode-font (font-spec :family "Sarasa Nerd" :size 8)
+               doom-unicode-font (font-spec :family "Sarasa Nerd" :size 6)
                doom-modeline-height 32)))
   ;; fullscreen
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))

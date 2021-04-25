@@ -51,5 +51,11 @@
 ;; they are implemented.
 
 (setq default-directory "~")
+(setq doom-localleader-key ",")
+
+(use-package! exec-path-from-shell
+  :init
+  (exec-path-from-shell-initialize))
+(setq confirm-kill-emacs nil)
 
 (load! "bindings")

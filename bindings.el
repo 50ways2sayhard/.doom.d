@@ -114,7 +114,16 @@
         :desc "Open App" "a" #'counsel-osx-app)
        :desc "Comments"  "c" #'counsel-imenu-comments
        :desc "Search project with regex" "P" #'+default/search-project-regex
-       :desc "Project (hidden)" "h" #'+ivy/project-search-with-hidden-files))
+       :desc "Project (hidden)" "h" #'+ivy/project-search-with-hidden-files)
+      (:prefix ("l" . "Leetcode")
+       "l" #'leetcode
+       "s" #'leetcode-submit
+       "t" #'leetcode-try
+       "r" #'leetcode-refresh
+       "R" #'leetcode-refresh-fetch
+       "f" #'leetcode-set-filter-difficulty
+       "." #'leetcode-reset-filter)
+      )
 
 (map!
  (:after lsp-ui
@@ -179,3 +188,8 @@
  (:after company
   (:map (company-active-map evil-insert-state-map)
    "C-o" #'smarter-yas-expand-next-field-complete)))
+
+(map!
+ (:map rime-mode-map
+  "M-j" #'rime-inline-ascii
+  ))

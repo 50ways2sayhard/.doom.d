@@ -1,9 +1,5 @@
 ;;; private/mypython/config.el -*- lexical-binding: t; -*-
 
-(use-package! sphinx-doc
-  :after python
-  :config
-  (setq sphinx-doc-python-indent 4))
 
 (use-package! lsp-pyright
   :init (when (executable-find "python3") (setq lsp-pyright-python-executable-cmd "python3"))
@@ -12,6 +8,12 @@
   (setq lsp-pyright-multi-root nil)
   (setq lsp-pyright-use-library-code-for-types t)
   )
+
+(use-package! sphinx-doc
+  :after python
+  :config
+  (setq sphinx-doc-python-indent 4))
+
 
 (after! python
   (setq python-indent-offset 4
